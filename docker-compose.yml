@@ -1,0 +1,76 @@
+services:
+  # 1. SecureDB Application Backend & UI
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: securedb_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://securedb_admin:securedb_secret_pass@app_db:5432/securedb
+      - SECUREDB_MASTER_KEY=${SECUREDB_MASTER_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - SECUREDB_STORAGE_DIR=/app/storage/backups
+      - SECUREDB_TEMP_DIR=/app/storage/temp
+    volumes:
+      - backup_storage:/app/storage/backups
+    depends_on:
+      app_db:
+        condition: service_healthy
+      collegedb:
+        condition: service_healthy
+    networks:
+      - securedb_net
+
+  # 2. SecureDB System Application Database
+  app_db:
+    image: postgres:16-alpine
+    container_name: securedb_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: securedb
+      POSTGRES_USER: securedb_admin
+      POSTGRES_PASSWORD: securedb_secret_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - app_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securedb_admin -d securedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securedb_net
+
+  # 3. Sample CollegeDB Target to Back Up
+  collegedb:
+    image: postgres:16-alpine
+    container_name: securedb_collegedb
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: collegedb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: collegedb_secure_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./scripts/seed_collegedb.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - collegedb_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d collegedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securedb_net
+
+volumes:
+  app_db_data:
+  collegedb_data:
+  backup_storage:
+
+networks:
+  securedb_net:
+    driver: bridge

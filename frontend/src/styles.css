@@ -1,0 +1,22 @@
+:root { --bg:#0b1220; --card:#131c2e; --line:#243049; --text:#e6ecf5; --muted:#8a99b5; --ok:#22c55e; --bad:#ef4444; --warn:#f59e0b; --accent:#38bdf8; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,Segoe UI,Roboto,sans-serif; }
+.wrap { max-width:1150px; margin:0 auto; padding:20px; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+h1 { margin:0; font-size:22px; } h2 { font-size:15px; margin:0 0 12px; color:var(--muted); font-weight:600; }
+.grid4 { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:14px; }
+.grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; margin-bottom:14px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; overflow-x:auto; }
+.stat b { display:block; font-size:32px; margin-top:6px; }
+.alert { border-left:4px solid var(--bad); background:#2a1420; padding:10px 12px; border-radius:6px; margin-bottom:8px; font-size:14px; }
+.alert.medium { border-color:var(--warn); background:#2a2114; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th,td { text-align:left; padding:8px; border-bottom:1px solid var(--line); white-space:nowrap; }
+th { color:var(--muted); font-weight:600; }
+.pill { padding:2px 8px; border-radius:99px; font-size:12px; background:#1f2b45; }
+.pill.safe,.pill.success { color:var(--ok); } .pill.tampered,.pill.failed,.pill.denied { color:var(--bad); } .pill.created { color:var(--warn); }
+button { background:var(--accent); color:#04222f; border:0; border-radius:8px; padding:6px 12px; font-weight:600; cursor:pointer; }
+button.ghost { background:transparent; color:var(--text); border:1px solid var(--line); } button.danger { background:var(--bad); color:#fff; }
+input { background:#0e1626; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:10px; width:100%; margin-bottom:10px; }
+.login { max-width:360px; margin:12vh auto; } .err { color:var(--bad); font-size:13px; margin-bottom:8px; }
+.result { font-family:monospace; font-size:13px; margin-top:8px; color:var(--muted); }

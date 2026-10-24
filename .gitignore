@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Environments & secrets
+.env
+.venv/
+.venv312/
+env/
+venv/
+ENV/
+
+# Local databases and backups
+*.db
+*.sqlite
+*.sqlite3
+*.secdb
+storage/backups/*
+storage/temp/*
+storage/demo/*
+!storage/backups/.gitkeep
+!storage/temp/.gitkeep
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend build
+frontend/node_modules/
+frontend/dist/
+*.local
+.npm
+
+# Logs
+*.log
