@@ -4,7 +4,6 @@ Automated database backup, encryption, integrity monitoring and verified disaste
 
 SecureDB is a web-based system that backs up PostgreSQL databases on a schedule, encrypts every backup, detects tampering, and restores only after the backup has passed verification.
 
-> Built as a final-year B.Tech / B.E. CSE project (Cryptography & Database Security).
 
 # Features
 
