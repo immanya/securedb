@@ -67,10 +67,6 @@ cp .env.example .env
 # edit .env and set SECUREDB_MASTER_KEY and JWT_SECRET_KEY (see below)
 docker-compose up --build -d
 
-
-- Web UI: http://localhost:8000
-- API docs: http://localhost:8000/docs
-
 Services: the SecureDB app (8000), the app's PostgreSQL database (5432), and a sample `collegedb` target to back up (5433).
 
 > The database passwords in `docker-compose.yml` are **demo values only**. Change them for any real deployment.
