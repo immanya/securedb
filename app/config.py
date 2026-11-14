@@ -20,8 +20,9 @@ class Settings:
     PROJECT_NAME: str = "SecureDB"
     PROJECT_VERSION: str = "1.0.0"
     
-    # Database URL: default to local SQLite, or PostgreSQL if configured
-    DATABASE_URL: str = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'securedb.db'}")
+    # Database URL: default to local SQLite, or PostgreSQL if configured (auto-normalizes postgres:// to postgresql://)
+    _raw_db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'securedb.db'}")
+    DATABASE_URL: str = _raw_db_url.replace("postgres://", "postgresql://", 1) if _raw_db_url.startswith("postgres://") else _raw_db_url
     
     # Master key (hex or raw 32 bytes)
     MASTER_KEY_HEX: str = DEFAULT_MASTER_KEY_HEX
